@@ -1,18 +1,27 @@
 \documentclass{scrartcl}
-\usepackage{csquotes}
+\usepackage[letterpaper,top=1in,bottom=1in]{geometry}
+% \usepackage{tabulary}
 \usepackage[american]{babel}
+% \usepackage{booktabs}
+\usepackage{csquotes}
 \usepackage{fontspec}
 \usepackage{graphicx}
-\usepackage{svg}
-\usepackage{booktabs}
-\usepackage{tabulary}
 \usepackage{hyperref}
 \usepackage{listings}
+\usepackage{siunitx}
+\usepackage{svg}
+\usepackage{scrlayer-fancyhdr}
+\usepackage{tabularray}
+
+\UseTblrLibrary{booktabs}
 \setmainfont{Hoefler Text}
 \setmonofont{Courier Prime}
 \setlength\heavyrulewidth{0.20ex}
 \setlength\cmidrulewidth{0.10ex}
 \setlength\lightrulewidth{0.10ex}
+\newcolumntype{L}{>{\raggedright\arraybackslash}X} % Defines new column type with variable length, similar to X in tabularx, but is left aligned rather than justified
+\newcolumntype{R}{>{\raggedleft\arraybackslash}X} % Defines new column type with variable length, similar to X in tabularx, but is right aligned rather than justified
+\newcolumntype{C}{>{\centering\arraybackslash}X} % Defines new column type with variable length, similar to X in tabularx, but is centered rather than justified
 \hypersetup{
     pdftitle={CMSC 315, Project 1}
     pdfauthor={Alberth Matos}
@@ -38,23 +47,32 @@
 \title{CMSC 315, Project 1}
 \author{Alberth Matos}
 \date{21 Jan 2026}
+\pagestyle{fancy}
+\fancyhead{}
+\fancyfoot{}
+\fancyhead[R]{A.Matos}
+\fancyhead[L]{CMSC 315, Project 1}
+\fancyfoot[C]{\thepage}
 
 \begin{document}
 \maketitle
+% \tableofcontents
+\thispagestyle{empty}
+% \newpage
 \section{Design}
 The goal of the project was to implement a program that checks for balanced
 delimiters within a given file, using a stack-based approach to track that
 each right-delimiter matched its corresponding left-delimiter. Of note, the
 project instructions state the following:
 \begin{displayquote}
-It should then repeatedly call the method that returns the next character
-until it returns a null character indicating the end of the file or until a
-mismatch of delimiters is encountered. If the character is a left delimiter
-it should be pushed onto a delimiter stack. \emph{If it is a right delimiter, the
-stack should be popped and a check should be made to ensure that the
-delimiters are of a matching type}. If the delimiters do not match, a message
-should be displayed indicating what delimiter was encountered and at what
-position.
+	It should then repeatedly call the method that returns the next character
+	until it returns a null character indicating the end of the file or until a
+	mismatch of delimiters is encountered. If the character is a left delimiter
+	it should be pushed onto a delimiter stack. \emph{If it is a right delimiter, the
+		stack should be popped and a check should be made to ensure that the
+		delimiters are of a matching type}. If the delimiters do not match, a message
+	should be displayed indicating what delimiter was encountered and at what
+	position.
 \end{displayquote}
 This can cause confusion when dealing with extraneous delimiters, as the
 instructions state that every time a right-delimiter is encountered,
@@ -81,70 +99,35 @@ at line 2, position 3.
 \includesvg{CheckDelimiters-Class.svg}
 \section{Test Plan}
 Test Plan:\footnote{Source code files used as test data are provided in
-Section \ref{sec:test-data}.}
+	Section \ref{sec:test-data}.}
 \begin{enumerate}
-    \item Invalid filename provided; program should display an error
-    message indicating that the file does not exist, and re-prompt the user
-    for a filename.
-    \item Valid input with matching delimiters; Several delimiters
-    are included in the input file, \emph{goodfile.java}, both inside and outside of
-    comments. The program should correctly identify and match all delimiters,
-    and not display any error messages.  The program should especially not
-    display any error messages related to unmatched delimiters inside of
-    comments.
-    \item Valid input with mismatched delimiters; a total of
-    six (6) mismatched delimiters are included in the input file,
-    \emph{badfile1.java}. The program should correctly identify and report
-    all mismatched delimiters, and not display any error messages related
-    to unmatched delimiters inside of comments.
-    \item Valid input, \emph{badfile2.java}, with an extraneous
-    left-delimiter, as well as a left-delimiter inside a comment.  The program
-    should correctly identify and report the single left-delimiter.
-    \item Valid input, \emph{badfile3.java}, with an extraneous
-    right-delimiter, as well as a right-delimiter inside a comment.  The
-    program should correctly identify and report the bad right-delimiter,
-    as well as the right-delimiter that would normally be matched at the end
-    of the file.
+	\item Invalid filename provided; program should display an error
+	      message indicating that the file does not exist, and re-prompt the user
+	      for a filename.
+	\item Valid input with matching delimiters; Several delimiters
+	      are included in the input file, \emph{goodfile.java}, both inside and outside of
+	      comments. The program should correctly identify and match all delimiters,
+	      and not display any error messages.  The program should especially not
+	      display any error messages related to unmatched delimiters inside of
+	      comments.
+	\item Valid input with mismatched delimiters; a total of
+	      six (6) mismatched delimiters are included in the input file,
+	      \emph{badfile1.java}. The program should correctly identify and report
+	      all mismatched delimiters, and not display any error messages related
+	      to unmatched delimiters inside of comments.
+	\item Valid input, \emph{badfile2.java}, with an extraneous
+	      left-delimiter, as well as a left-delimiter inside a comment.  The program
+	      should correctly identify and report the single left-delimiter.
+	\item Valid input, \emph{badfile3.java}, with an extraneous
+	      right-delimiter, as well as a right-delimiter inside a comment.  The
+	      program should correctly identify and report the bad right-delimiter,
+	      as well as the right-delimiter that would normally be matched at the end
+	      of the file.
 \end{enumerate}
-Test results are displayed in Table \ref{tab:test-plan}.
 
+\subsection{Test Results}
+\input{tabledata}
 
-\begin{table}[h]
-\centering
-\caption{Test Results}
-\begin{tabulary}{1.0\textwidth}{RLL}
-\toprule
-Test Case & Input & Expected Output \\
-\cmidrule(l){1-1} \cmidrule(lr){2-2} \cmidrule(l){3-3}
-1 & Invalid filename & Message displays that the file does not exist, and
-    re-prompt the user for the filename. \\
-\\
-2 & Valid input with matching delimiters, file: goodfile.java & No error
-message, program completes successfully and displays \enquote{End of file reached.} \\
-\\
-3 & Invalid input with mismatched left-delimiters, file: badfile1.java &
-Program displays error
-messages for each mismatched delimiter.\newline
-Unmatched right delimiter \enquote*{)} found at line 11, character (index) 41.\newline
-Unmatched right delimiter \enquote*{]} found at line 15, character (index) 44.\newline
-Unmatched right delimiter \enquote*{]} found at line 26, character (index) 7.\newline
-Unmatched right delimiter \enquote*{)} found at line 33, character (index) 3.\newline
-Unmatched right delimiter \enquote*{\}} found at line 35, character (index) 3.\newline
-Unmatched right delimiter \enquote*{\}} found at line 36, character (index) 1. \\
-\\
-4 & Invalid input with mismatched right-delimiters, file: badfile2.java &
-Program displays error messages for each mismatched delimiter. \newline
-Unmatched right delimiter \enquote*{\}} found at line 3, character (index) 1.\\
-\\
-5 & Invalid input with mismatched right-delimiters, file: badfile3.java &
-Program displays error messages for each mismatched delimiter. \newline
-Unmatched right delimiter \enquote*{)} found at line 2, character (index) 3.\newline
-Unmatched right delimiter \enquote*{\}} found at line 3, character (index) 1.\\
-\bottomrule
-\end{tabulary}
-
-\label{tab:test-plan}
-\end{table}
 \section{Lessons Learned}
 The single most important lesson learned from the project was the importance
 of reading the requirements carefully and thoroughly. When initially
@@ -159,19 +142,24 @@ left-delimiter off of the stack.
 A second read through the requirements allowed the programmer to catch
 this error in understanding, and correct the pseudocode before writing
 the actual program.
+\newpage
 \section{Test Data}
 \label{sec:test-data}
 
 \subsection{goodfile.java}
+\label{sec:goodfile}
 \lstinputlisting[language=Java]{../testdata/goodfile.java}
 
 \subsection{badfile1.java}
+\label{sec:badfile1}
 \lstinputlisting[language=Java]{../testdata/badfile1.java}
 
 \subsection{badfile2.java}
+\label{sec:badfile2}
 \lstinputlisting[language=Java]{../testdata/badfile2.java}
 
 \subsection{badfile3.java}
+\label{sec:badfile3}
 \lstinputlisting[language=Java]{../testdata/badfile3.java}
 
 \end{document}

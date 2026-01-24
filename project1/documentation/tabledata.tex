@@ -1,0 +1,50 @@
+\begin{longtblr}[caption={Test Cases}, label={tab:test-plan}]
+	{
+	colspec = {X[c]X[4,l]X[7,l]},
+	width=\linewidth,
+	rowhead = 1
+	}
+	\toprule
+	Test Case & Input                                                                                                    & Expected Output                                    \\
+	\cmidrule[lr]{1-1} \cmidrule[lr]{2-2} \cmidrule[lr]{3-3}
+	1         & Invalid filename                                                                                         & Message displays that the file does not exist, and
+	re-prompt the user for the filename.                                                                                                                                      \\
+	\SetCell[c=3]{c}
+	\includegraphics[width=0.8\textwidth]{images/test1.png}
+
+	\\
+	2         & Valid input with matching delimiters, file: goodfile.java \textsuperscript{\ref{sec:goodfile}}           & No error
+	message, program completes successfully and displays \enquote{End of file reached.}                                                                                       \\
+	\SetCell[c=3]{c}
+	\includegraphics[width=0.8\textwidth]{images/test2.png}
+
+	\\
+	3         & Invalid input with mismatched left-delimiters, file: badfile1.java \textsuperscript{\ref{sec:badfile1}}  &
+	Program displays error
+	messages for each mismatched delimiter.\newline
+	Unmatched right delimiter \enquote*{)} found at line 5, character (index) 41.\newline
+	Unmatched right delimiter \enquote*{]} found at line 9, character (index) 44.\newline
+	Unmatched right delimiter \enquote*{]} found at line 19, character (index) 7.\newline
+	Unmatched right delimiter \enquote*{)} found at line 27, character (index) 3.\newline
+	Unmatched right delimiter \enquote*{\}} found at line 28, character (index) 5.\newline
+	Unmatched right delimiter \enquote*{\}} found at line 29, character (index)) 3.                                                                                            \\
+	\SetCell[c=3]{c}
+	\includegraphics[width=0.8\textwidth]{images/test3.png}
+
+	\\
+	4         & Invalid input with mismatched right-delimiters, file: badfile2.java \textsuperscript{\ref{sec:badfile2}} &
+	Program displays error messages for each mismatched delimiter. \newline
+	Unmatched right delimiter \enquote*{\}} found at line 3, character (index) 1.                                                                                             \\
+	\SetCell[c=3]{c}
+	\includegraphics[width=0.8\textwidth]{images/test4.png}
+
+	\\
+	5         & Invalid input with mismatched right-delimiters, file: badfile3.java \textsuperscript{\ref{sec:badfile3}} &
+	Program displays error messages for each mismatched delimiter. \newline
+	Unmatched right delimiter \enquote*{)} found at line 2, character (index) 3.\newline
+	Unmatched right delimiter \enquote*{\}} found at line 3, character (index) 1.                                                                                             \\
+	\SetCell[c=3]{c}
+	\includegraphics[width=0.8\textwidth]{images/test5.png}
+	\\
+	\bottomrule
+\end{longtblr}
