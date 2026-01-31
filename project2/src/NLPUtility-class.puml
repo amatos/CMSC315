@@ -1,0 +1,17 @@
+@startuml
+class NLPUtility {
+  + countFilteredWords(String[], Set<String>): TreeMap<String, Integer>
+  + sortByValueDescending(Map<String, Integer>): LinkedHashMap<String, Integer>
+  + splitTextIntoTokens(String): String[]
+  + getSentiment(Map<String, Integer>, Set<String>, Set<String>): String
+  + getWordsWithMaxFrequency(Map<String, Integer>): Map<String, Object>
+}
+
+class Main {
+  + Main():
+  + main(String[]): void
+}
+
+Main --> NLPUtility : creates
+
+@enduml
