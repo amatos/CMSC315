@@ -1,0 +1,43 @@
+\begin{wrapfigure}{r}{0.6\textwidth}
+	\fbox{\includegraphics[width=1.0\linewidth]{images/test6.png}}
+	\caption{Sentence \ref{sentence6} image}
+\end{wrapfigure}
+Expected output:\newline
+\begin{lstlisting}
+Tokenized:
+[I, really, love, a, good, book, and, You, REALLY, love, a, sad, movie, We, both, ReAllY, LOVE, going, for, a, walk]
+
+Word map sorted by key ascending:
+book:1
+both:1
+for:1
+going:1
+good:1
+i:1
+love:3
+movie:1
+really:3
+sad:1
+walk:1
+we:1
+you:1
+
+Word map sorted by value descending:
+love:3
+really:3
+book:1
+both:1
+for:1
+going:1
+good:1
+i:1
+movie:1
+sad:1
+walk:1
+we:1
+you:1
+
+Sentiment: Positive: 4, Negative: 1
+
+Most frequent word(s): [love, really] (used 3 times)
+\end{lstlisting}

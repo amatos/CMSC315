@@ -1,17 +1,20 @@
 @startuml
-class NLPUtility {
-  + countFilteredWords(String[], Set<String>): TreeMap<String, Integer>
-  + sortByValueDescending(Map<String, Integer>): LinkedHashMap<String, Integer>
-  + splitTextIntoTokens(String): String[]
-  + getSentiment(Map<String, Integer>, Set<String>, Set<String>): String
-  + getWordsWithMaxFrequency(Map<String, Integer>): Map<String, Object>
-}
+
+top to bottom direction
+skinparam linetype ortho
 
 class Main {
   + Main():
   + main(String[]): void
 }
+class NLPUtility {
+  + NLPUtility():
+  + sortByValueDescending(Map<String, Integer>): LinkedHashMap<String, Integer>
+  + getWordsWithMaxFrequency(Map<String, Integer>): Map<String, Object>
+  + splitTextIntoTokens(String): String[]
+  + countFilteredWords(String[], Set<String>): TreeMap<String, Integer>
+  + getSentiment(Map<String, Integer>, Set<String>, Set<String>): String
+}
 
-Main --> NLPUtility : creates
-
+Main --> NLPUtility
 @enduml

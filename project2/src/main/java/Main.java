@@ -1,3 +1,11 @@
+/*
+ Author: Alberth Matos
+ CMSC 315, Project 2
+ Date: 3 February 2026
+ Description: This class is the provided clas from the project starter kit.
+ I have not made any changes to this class.
+ */
+
 import java.util.*;
 
 public class Main {

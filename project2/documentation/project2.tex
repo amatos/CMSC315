@@ -1,0 +1,140 @@
+\documentclass{scrartcl}
+\usepackage[letterpaper,top=1in,bottom=1in]{geometry}
+% \usepackage{tabulary}
+\usepackage[american]{babel}
+% \usepackage{booktabs}
+\usepackage{csquotes}
+\usepackage{fontspec}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{siunitx}
+\usepackage{svg}
+\usepackage{scrlayer-fancyhdr}
+\usepackage{scrextend}
+\usepackage{tabularray}
+\usepackage{wrapfig}
+\usepackage{subcaption}
+
+\title{CMSC 315, Project 2}
+\author{Alberth Matos}
+\date{3 Feb 2026}
+\UseTblrLibrary{booktabs}
+\setmainfont{Hoefler Text}
+\setmonofont{Courier Prime}
+\setlength\heavyrulewidth{0.20ex}
+\setlength\cmidrulewidth{0.10ex}
+\setlength\lightrulewidth{0.10ex}
+\newcolumntype{L}{>{\raggedright\arraybackslash}X} % Defines new column type
+% with variable length, similar to X in tabularx, but is left aligned rather
+% than justified
+\newcolumntype{R}{>{\raggedleft\arraybackslash}X} % Defines new column type
+% with variable length, similar to X in tabularx, but is right aligned rather
+% than justified
+\newcolumntype{C}{>{\centering\arraybackslash}X} % Defines new column type
+% with variable length, similar to X in tabularx, but is centered rather
+% than justified
+\hypersetup{
+    pdftitle={\@title},
+    pdfauthor={\@author}
+}
+\lstdefinestyle{numberedLines}{
+    numbers=left,
+    numberstyle=\small,
+    stepnumber=1,
+    numbersep=5pt,
+    frame=none,
+    framerule=0.5pt,
+    framesep=2pt,
+    basicstyle=\ttfamily,
+    keywordstyle=\color{blue}\bfseries,
+    commentstyle=\color{gray},
+    stringstyle=\color{black},
+    showstringspaces=false,
+    breaklines=true,
+    postbreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\hookrightarrow\space}}
+}
+\lstset{style=numberedLines}
+\setcounter{page}{1}
+
+\pagestyle{fancy}
+\fancyhead{}
+\fancyfoot{}
+\fancyhead[R]{A.Matos}
+\fancyhead[L]{CMSC 315, Project 2}
+\fancyfoot[C]{\thepage}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\thispagestyle{empty}
+\newpage
+\section{Design}
+The goal of the project was to implement \emph{Natural Language Processing}
+(NLP) utility methods to analyze a paragraph of text entered by the user,
+including word frequency and sentiment analysis.  The project also required
+us to create unit tests for each method created, ensuring that the methods
+function correctly and efficiently.
+
+\subsection{UML Diagram}
+\includesvg{WordFrequency-and-SentimentAnalysis.svg}
+\newpage
+\section{Testing:}
+\subsection{Test Plan}
+\begin{enumerate}
+	\item Unit tests for each method in NLPUtils.java
+	\item Test sentences for full application validation.
+	      \begin{enumerate}
+		      \item \enquote{WOW!?!    That .?\# is REALLY(reaLLy) amazing!      }\label{sentence1}
+		      \item \enquote{This is a test sentence. This is a great test sentence.  This awful test sentence.  Many sentences.}\label{sentence2}
+		      \item \enquote{I love dancing in the rain like it’s the most magical thing in existence, adore sunsets that explode with color, like spontaneous road trips, yet I hate traffic jams with every ounce of my being, despise burnt toast, and worship the rare, mind-blowingly perfect moments that make life feel impossibly, overwhelmingly extraordinary.}\footnote{Indicated sentences generated with ChatGPT.\label{chatGPT}}\label{sentence3}
+		      \item \enquote{I absolutely love the smell of rain like it’s the most divine perfume on the planet, yet I utterly hate stepping in puddles as if the universe itself is conspiring against me. I adore sunrises with a passion that could light cities, and I love coffee so intensely it feels like a life force flowing through my veins. I like quiet mornings, but I love thunderous storms more than anything else imaginable.}\footref{chatGPT}\label{sentence4}
+		      \item \enquote{I love a good BOOK and LOVE sad BooK book!}\label{sentence5}
+		      \item \enquote{I really love a good book, and You REALLY love a sad movie. We both ReAllY LOVE going for a walk!}\label{sentence6}
+		      \item \enquote{SO is.! It????}\label{sentence7}
+	      \end{enumerate}
+\end{enumerate}
+\newpage
+\subsection{Test Results}
+\subsubsection{Test 1, Unit Tests}
+\input{unittests}
+\clearpage
+\subsubsection{Test 2, Sentence \ref{sentence1}}
+\input{sentence1}
+\clearpage
+\subsubsection{Test 3, Sentence \ref{sentence2}}
+\input{sentence2}
+\clearpage
+\subsubsection{Test 4, Sentence \ref{sentence3}}
+\input{sentence3}
+\clearpage
+\subsubsection{Test 5, Sentence \ref{sentence4}}
+\input{sentence4}
+\clearpage
+\subsubsection{Test 6, Sentence \ref{sentence5}}
+\input{sentence5}
+\clearpage
+\subsubsection{Test 7, Sentence \ref{sentence6}}
+\input{sentence6}
+\clearpage
+\subsubsection{Test 8, Sentence \ref{sentence7}}
+\input{sentence7}
+\clearpage
+\section{Lessons Learned}
+The single most important lesson learned from the project was the importance
+of reading the requirements carefully and thoroughly, especially when
+the answers to one's question may well be answered within the offered examples.
+
+For this particular project, it was ambiguous to this programmer whether the
+\emph{testSortByValueDescending()} method should, in addition to its main
+purpose of sorting by value in descending order, also sort by key.  To this
+programmer, performing the additional sort by key provided a more accurate
+representation of the data, and appealed to my inner sense of order.  While
+it was not required in the documentation, careful observation of the
+\emph{Sample Program Flow} and \emph{Empty or Non-Meaningful Input} examples
+showed the same behavior.
+\newpage
+\section{Unit Tests}
+\label{sec:unittests}
+\lstinputlisting[language=Java]{../src/test/java/NLPUtilityTest.java}
+\end{document}

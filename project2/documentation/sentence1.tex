@@ -1,0 +1,25 @@
+\begin{wrapfigure}{r}{0.4\textwidth}
+	\fbox{\includegraphics[width=1.0\linewidth]{images/test1.png}}
+	\caption{Sentence \ref{sentence1} image}
+\end{wrapfigure}
+Expected output:\newline
+\begin{lstlisting}
+Tokenized:
+[WOW, That, is, REALLY, reaLLy, amazing]
+
+Word map sorted by key ascending:
+amazing:1
+really:2
+that:1
+wow:1
+
+Word map sorted by value descending:
+really:2
+amazing:1
+that:1
+wow:1
+
+Sentiment: Positive: 0, Negative: 0
+
+Most frequent word(s): [really] (used 2 times)
+\end{lstlisting}

@@ -2,61 +2,12 @@
  Author: Alberth Matos
  CMSC 315, Project 2
  Date: 3 February 2026
- Description:
-  In this project, you'll implement a set of basic Natural Language
-  Processing (NLP) utility methods to analyze a paragraph of text entered by
-  the user.
+ Description: This class contains my implementation of Project 2's NLPUtility
+ class.  For each of the 5 methods in the provided class, I have presented
+ a reasonably simple solution based on the requirements document.
 
-  Task 1. public static String[] splitTextIntoTokens(String text)
-  Splits the text into individual words, treating consecutive whitespace or
-  punctuation characters as a single delimiter.
-  NOTE: The regular expression given in the Pearson textbook in
-  section 21.6 is incorrect. The plus sign should follow the character class
-  to match 1 or more white space or punctuation characters.
-  [\\s\\p{P}]+
-
-  Task 2. public static TreeMap<String, Integer> countFilteredWords(
-    String[] words, Set<String> stopWords)
-  Counts the frequency of non-stop words in the given array of words,
-  ignoring case. Returns a TreeMap sorted alphabetically by key (i.e. word).
-
-  Task 3. public static LinkedHashMap<String, Integer> sortByValueDescending(
-    Map<String, Integer> map)
-  Returns a LinkedHashMap sorted by frequency in descending order. For ties,
-  maintains the original order of keys as they appear in the map.
-  Algorithm:
-      1. Convert the word map entries to a list for sorting
-      2. Sort the list of entries in descending order based on value
-         (frequency)
-      3. Create a LinkedHashMap and insert the sorted entries to maintain
-         their order.
-
-  Task 4. public static String getSentiment(Map<String, Integer> wordMap,
-    Set<String> positiveWords, Set<String> negativeWords)
-  Sums the total frequencies of words in the corresponding positive and
-  negative word sets. Returns a summary string in the format
-  "Positive: X, Negative: Y".
-
-  Task 5. public static Map<String, Object> getWordsWithMaxFrequency(
-    Map<String, Integer> wordMap)
-  Returns a map containing an alphabetically sorted list of words that
-  appear most frequently in the given word map, along with the
-  corresponding frequency.
-  Algorithm:
-      - Finds the maximum frequency value in the input map
-      - Collect a list of all words that occur with that frequency
-      - Sorts the list alphabetically
-      - Returns a new map with two entries having the following keys:
-        - "words": a list of most frequent words, sorted alphabetically
-        - "frequency": the maximum frequency as an integer
-  Note: The returned map contains two entries with String keys: "words" and
-  "frequency".
-      - The value associated with "words" is a List<String> containing the
-      most frequently occurring words.
-      - The value for "frequency" is an Integer representing the highest
-      frequency found.
-  Because the values are of different types (List<String> and Integer), the
-  method returns a map of type Map<String, Object>.
+ Each method is documented with the implementation details, documenting
+ my logic and approach for each.
  */
 
 import java.util.*;
@@ -145,26 +96,46 @@ public class NLPUtility {
    *         sorted in descending order by value.
    */
   public static LinkedHashMap<String, Integer> sortByValueDescending(Map<String, Integer> map) {
-    // Initialize new LinkedHashMap to store the sorted entries
     LinkedHashMap<String, Integer> sortedEntriesMap = new LinkedHashMap<>();
 
-    // If map is empty, return empty sortedEntriesMap.
+    // If map is empty, there's nothing to process, so return the empty
+    // sortedEntriesMap.
     if (map.isEmpty()) {
       return sortedEntriesMap;
     }
 
-    /*
-     Stream map.entrySet(), sort by reversed (that is, in descending order)
-     value, guaranteeing order with .forEachOrdered, and put each entry into
-     sortedEntriesMap.
-    */
-    map.entrySet()
-      .stream()
-      .sorted(Map.Entry.<String, Integer>comparingByValue().reversed())
-      .forEachOrdered(entry -> sortedEntriesMap
-        .put(entry.getKey(), entry.getValue()));
+    // Initialize a list to hold map entries
+    List<Map.Entry<String, Integer>> entries =
+      new ArrayList<>(map.entrySet());
 
-    // And return sortedEntriesMap.
+    // Sort the list using Collections.sort().  Since Map.Entry does not
+    // implement Comparable, we need to write our own compare method.
+    // n.b., It was unclear to me whether this method should return
+    // a LinkedHashMap sorted _just_ by the key, or if it should be sorted
+    // first by the key, and then sort the value alphabetically (ascending),
+    // I chose to err on the side of caution and implement both key and
+    // value sorting.  As required, key is sorted in descending order, and
+    // value is sorted alphabetically.
+    Collections.sort(entries, new Comparator<Map.Entry<String, Integer>>() {
+      @Override
+      public int compare(Map.Entry<String, Integer> e1,
+                         Map.Entry<String, Integer> e2) {
+
+        // Compare values in descending order
+        int comparisonValue = e2.getValue().compareTo(e1.getValue());
+        if (comparisonValue != 0) {
+          return comparisonValue;
+        }
+
+        // Compare keys alphabetically (ascending, that is a-z)
+        return e1.getKey().compareTo(e2.getKey());
+      }
+    });
+
+    for (Map.Entry<String, Integer> entry : entries) {
+      sortedEntriesMap.put(entry.getKey(), entry.getValue());
+    }
+
     return sortedEntriesMap;
   }
 

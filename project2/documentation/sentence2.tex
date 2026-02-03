@@ -1,0 +1,31 @@
+\begin{wrapfigure}{r}{0.6\textwidth}
+	\fbox{\includegraphics[width=1.0\linewidth]{images/test2.png}}
+	\caption{Sentence \ref{sentence2} image}
+\end{wrapfigure}
+Expected output:\newline
+\begin{lstlisting}
+Tokenized:
+[This, is, a, test, sentence, This, is, a, great, test, sentence, This, awful, test, sentence, Many, sentences]
+
+Word map sorted by key ascending:
+awful:1
+great:1
+many:1
+sentence:3
+sentences:1
+test:3
+this:3
+
+Word map sorted by value descending:
+sentence:3
+test:3
+this:3
+awful:1
+great:1
+many:1
+sentences:1
+
+Sentiment: Positive: 1, Negative: 0
+
+Most frequent word(s): [sentence, test, this] (used 3 times)
+\end{lstlisting}
