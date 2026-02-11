@@ -1,0 +1,31 @@
+@startuml
+
+!theme plain
+top to bottom direction
+skinparam linetype ortho
+
+class CompleteBinaryTree {
+  + CompleteBinaryTree(String): 
+  + CompleteBinaryTree(Integer[]): 
+  + preorder(): void
+  # makeNode(Integer[], int): TreeNode
+  + inorderList(): ArrayList<Integer>
+  - isMaxHeap(TreeNode, int): boolean
+  - isBinarySearchTree(TreeNode, Integer, Integer): boolean
+  - preorder(TreeNode, int): void
+   binarySearchTree: boolean
+   maxHeap: boolean
+}
+class InvalidTreeException {
+  + InvalidTreeException(String): 
+}
+class Main {
+  + Main(): 
+  + main(String[]): void
+}
+class TreeNode {
+  + TreeNode(Integer): 
+}
+
+TreeNode              +-[#820000,plain]-  CompleteBinaryTree   
+@enduml
