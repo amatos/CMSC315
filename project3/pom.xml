@@ -10,7 +10,7 @@
   <groupId>cc.matos.alberth.umgc.cmsc315</groupId>
   <artifactId>Project3</artifactId>
   <version>1.0-SNAPSHOT</version>
-  <name>Project 2</name>
+  <name>Project 3</name>
   <dependencyManagement>
     <dependencies>
       <dependency>
