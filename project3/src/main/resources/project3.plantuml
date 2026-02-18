@@ -1,31 +1,30 @@
 @startuml
 
-!theme plain
-top to bottom direction
-skinparam linetype ortho
-
-class CompleteBinaryTree {
-  + CompleteBinaryTree(String): 
-  + CompleteBinaryTree(Integer[]): 
-  + preorder(): void
-  # makeNode(Integer[], int): TreeNode
-  + inorderList(): ArrayList<Integer>
-  - isMaxHeap(TreeNode, int): boolean
-  - isBinarySearchTree(TreeNode, Integer, Integer): boolean
-  - preorder(TreeNode, int): void
-   binarySearchTree: boolean
-   maxHeap: boolean
-}
-class InvalidTreeException {
-  + InvalidTreeException(String): 
-}
 class Main {
-  + Main(): 
+  + Main():
   + main(String[]): void
 }
-class TreeNode {
-  + TreeNode(Integer): 
+class CompleteBinaryTree {
+  + CompleteBinaryTree(String):
+  + CompleteBinaryTree(Integer[]):
+  - isMaxHeap(TreeNode, int): boolean
+  + preorder(): void
+  - inorderList(TreeNode, ArrayList<Integer>): void
+  - preorder(TreeNode, int): void
+  - isBinarySearchTree(TreeNode, Integer, Integer): boolean
+  # makeNode(Integer[], int): TreeNode
+  + inorderList(): ArrayList<Integer>
+   maxHeap: boolean
+   binarySearchTree: boolean
 }
 
-TreeNode              +-[#820000,plain]-  CompleteBinaryTree   
+class InvalidTreeException {
+  + InvalidTreeException(String):
+}
+
+class TreeNode {
+  + TreeNode(Integer):
+}
+
+TreeNode              +-[#820000,plain]-  CompleteBinaryTree
 @enduml

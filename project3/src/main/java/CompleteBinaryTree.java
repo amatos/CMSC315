@@ -1,3 +1,23 @@
+/*
+ Author: Alberth Matos
+ CMSC 315, Project 3
+ Date: 17 February 2026
+ Description: This class is the provided class from the project starter kit.
+ I have made changes for tasks 1 through 5:
+ Task 1. Added public CompleteBinaryTree(String levelOrderValues)
+ Task 2. Update private void preorder() to output the tree using indentation
+         to indicate the tree's structure.
+ Task 3. Updated public boolean isMaxHeap() to call my recursive helper class,
+         private boolean isMaxHeap() to determine whether the tree is a
+         max heap tree.
+ Task 4. Updated public boolean isBinarySearchTree() to use my recursive
+         helper class, private boolean isBinarySearchTree(), to determine
+         whether the tree is a valid binary search tree.
+ Task 5. Updated public ArrayList<Integer> inorderList() to use my helper
+         class, private void inorderList(), to create an in-order list of
+         elements within the tree.
+ */
+
 import java.util.ArrayList;
 
 public class CompleteBinaryTree {
@@ -154,10 +174,12 @@ public class CompleteBinaryTree {
         return;
       }
 
-      // Per the example in Task two, each indentation level should be 4
-      // spaces.  We use this in combination with the subsequent println()
-      // to print the correct indentation.  The first (that is, 0th) level
-      // is NOT indented.
+      /*
+       Per the example in Task two, each indentation level should be 4
+       spaces.  We use this in combination with the subsequent println()
+       to print the correct indentation.  The first (that is, 0th) level
+       is NOT indented.
+      */
       int spacesPerLevel = 4 * level;
       System.out.println(" ".repeat(spacesPerLevel) + root.value + " ");
 
@@ -192,15 +214,15 @@ public class CompleteBinaryTree {
       return true;
     }
 
-    // If both root.left and root.right are null, then this is a leaf node
+    // If both root.left and root.right are null, then this is a leaf node,
     // and we can stop checking.
     if (root.left == null && root.right == null) {
       return true;
     }
 
-    // If both root.left and root.right are NOT null, check whether the tree
+    // If either root.left or root.right are NOT null, check whether the tree
     // satisfies the max-heap property.
-    if (root.left != null && root.right != null) {
+    if (root.left != null || root.right != null) {
       /*
        This could all be consolidated into a single large return statement,
        but, for clarity, we'll break it out into the four individual
@@ -212,12 +234,26 @@ public class CompleteBinaryTree {
          4. Is the right subtree a max-heap?  Determine via recursive call to
             isMaxHeap(root.right, level + 1).
        Return the combined value of all four checks anded together.
+       Initial values of "true" are defined for all four checks, for
+       rootLeftIsMaxHeap and rootRightIsMaxHeap.  We check to see if root.left
+       or root.right are null, and, in case they are, we don't want the test
+       to fail with a null pointer exception, and, since a null value is, by
+       definition, true, we explicitly define true here.
       */
-      boolean rootValueGreaterThanLeft = root.value >= root.left.value;
-      boolean rootValueGreaterThanRight = root.value >= root.right.value;
-      boolean rootLeftIsMaxHeap = isMaxHeap(root.left, level + 1);
-      boolean rootRightIsMaxHeap = isMaxHeap(root.right, level + 1);
-      return rootValueGreaterThanLeft && rootValueGreaterThanRight && rootLeftIsMaxHeap && rootRightIsMaxHeap;
+      boolean rootValueGreaterThanLeft = true;
+      boolean rootValueGreaterThanRight = true;
+      boolean rootLeftIsMaxHeap = true;
+      boolean rootRightIsMaxHeap = true;
+      if (root.left != null) {
+        rootValueGreaterThanLeft = root.value >= root.left.value;
+        rootLeftIsMaxHeap = isMaxHeap(root.left, level + 1);
+      }
+      if (root.right != null) {
+        rootValueGreaterThanRight = root.value >= root.right.value;
+        rootRightIsMaxHeap = isMaxHeap(root.right, level + 1);
+      }
+      return rootValueGreaterThanLeft && rootValueGreaterThanRight &&
+        rootLeftIsMaxHeap && rootRightIsMaxHeap;
     } else {
       // If the above check fails, then the tree is not a max heap.
       return false;
@@ -235,8 +271,8 @@ public class CompleteBinaryTree {
    * @return true if the tree satisfies BST properties, false otherwise
    */
   public boolean isBinarySearchTree() {
-    // TODO
-    return false;
+    // Task 4
+    return isBinarySearchTree(root, null, null);
   }
 
   /**
@@ -254,8 +290,26 @@ public class CompleteBinaryTree {
    */
   private boolean isBinarySearchTree(TreeNode node, Integer min, Integer
     max) {
-    // TODO
-    return false;
+    // An empty root is valid, so we are done at this node.
+    if (node == null) {
+      return true;
+    }
+
+    // Check current node against bounds
+    // If min has a value AND node.value is less than or equal to min, return
+    // false.
+    if (min != null && node.value <= min) {
+      return false;
+    }
+    // If max has a value AND node.value is greater than or equal to max, return
+    // false.
+    if (max != null && node.value >= max) {
+      return false;
+    }
+
+    // Recursively validate left and right subtrees
+    return isBinarySearchTree(node.left, min, node.value)
+      && isBinarySearchTree(node.right, node.value, max);
   }
 
   /**
@@ -271,8 +325,23 @@ public class CompleteBinaryTree {
   public ArrayList<Integer> inorderList() {
     // Task 5. Create an in-order list of values.
     ArrayList<Integer> inorderArray = new ArrayList<Integer>();
-    // TODO
+    // Call the helper function to perform the list population.
+    inorderList(root, inorderArray);
 
     return inorderArray;
+  }
+
+  private void inorderList(TreeNode node, ArrayList<Integer> list) {
+    // If the node is null, just return, since there won't be any values
+    // to process.
+    if (node == null) {
+      return;
+    }
+
+    // Recursively descend the nodes on the left, populate the value, and then
+    // recursively descend on the right.
+    inorderList(node.left, list);
+    list.add(node.value);
+    inorderList(node.right, list);
   }
 }
