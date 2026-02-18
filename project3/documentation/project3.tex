@@ -1,0 +1,186 @@
+% arara: lualatex
+\documentclass{scrartcl}
+\usepackage[letterpaper,top=1in,bottom=1in]{geometry}
+% \usepackage{tabulary}
+\usepackage[american]{babel}
+% \usepackage{booktabs}
+\usepackage{csquotes}
+\usepackage{fontspec}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{siunitx}
+\usepackage{svg}
+\usepackage{scrlayer-fancyhdr}
+\usepackage{scrextend}
+\usepackage{tabularray}
+\usepackage{wrapfig}
+\usepackage{tikz}
+\usepackage{amsmath}
+\usepackage{xcolor}
+\usepackage{tikz}
+
+
+\title{CMSC 315, Project 3}
+\author{Alberth Matos}
+\date{17 Feb 2026}
+\UseTblrLibrary{booktabs}
+\setmainfont{Hoefler Text}
+\setmonofont{Courier Prime}
+\setlength\heavyrulewidth{0.20ex}
+\setlength\cmidrulewidth{0.10ex}
+\setlength\lightrulewidth{0.10ex}
+\newcolumntype{L}{>{\raggedright\arraybackslash}X} % Defines new column type
+% with variable length, similar to X in tabularx, but is left aligned rather
+% than justified
+\newcolumntype{R}{>{\raggedleft\arraybackslash}X} % Defines new column type
+% with variable length, similar to X in tabularx, but is right aligned rather
+% than justified
+\newcolumntype{C}{>{\centering\arraybackslash}X} % Defines new column type
+% with variable length, similar to X in tabularx, but is centered rather
+% than justified
+\hypersetup{
+    pdftitle={CMSC 315, Project 3},
+    pdfauthor={Alberth Matos}
+}
+\lstdefinestyle{numberedLines}{
+    numbers=left,
+    numberstyle=\small,
+    stepnumber=1,
+    numbersep=5pt,
+    frame=none,
+    framerule=0.5pt,
+    framesep=2pt,
+    basicstyle=\ttfamily,
+    keywordstyle=\color{blue}\bfseries,
+    commentstyle=\color{gray},
+    stringstyle=\color{black},
+    showstringspaces=false,
+    breaklines=true,
+    postbreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\hookrightarrow\space}}
+}
+\lstset{style=numberedLines}
+\setcounter{page}{1}
+
+\pagestyle{fancy}
+\fancyhead{}
+\fancyfoot{}
+\fancyhead[R]{A.Matos}
+\fancyhead[L]{CMSC 315, Project 3}
+\fancyfoot[C]{\thepage}
+
+
+
+\begin{document}
+\maketitle
+\tableofcontents
+\thispagestyle{empty}
+\newpage
+\section{Design}
+The goal of the project was to understand in depth how Java handles binary trees
+and their usage. Binary trees are critical data structures for efficient
+searching and sorting of data. While Java implements common methods for
+interacting with binary trees, this project walked us through implementing
+our own methods, with a goal of better understanding what the core java
+methods are doing.
+\\
+\subsection{UML Diagram}
+\includesvg[width=0.995\linewidth]{class_diagram.svg}
+% \includegraphics[width=1.0\linewidth]{images/UML.png}
+\newpage
+\section{Testing:}
+\subsection{Test Plan}
+\begin{enumerate}
+  \item Unit tests for each method in CompleteBinaryTreeTest.
+  \item Test Task 1
+  \begin{enumerate}
+    \item Test with valid multi-number input:\\ 90 70 50 20 40\label{task1-1}
+    \item Test with valid multi-number input with whitespace:\\ 90 70 50 20 40\label{task1-2}
+    \item Test with valid single-number input:\\ 5\label{task1-3}
+    \item Test with invalid input:\\ 50 30 abc 99\label{task1-4}
+    \item Test with empty input:\\ \emph{null}\label{task1-5}
+  \end{enumerate}
+  \item Test Task 2
+  \begin{enumerate}
+    \item Test with valid input:\\   90 70 50 20 40 10 25\label{task2-1}
+  \end{enumerate}
+  \item Test Task 3
+  \begin{enumerate}
+    \item Test with valid input:\\ 90 70 50 20 40 10 25\label{task3-1}
+    \item Test with invalid input:\\ 40 35 17 22 19 20\label{task3-2}
+    \item Test with an empty tree:\\ \emph{null}\label{task3-3}
+  \end{enumerate}
+  \item Test Task 4
+  \begin{enumerate}
+    \item Test BST and max-heap:\\ 10 5 15 2 7 12 20\label{task4-1}
+    \item Test BST not max-heap:\\ 10 5 15 2 7 12\label{task4-2}
+    \item Test not BST and max-heap:\\ 10 5 15 2 7 12\label{task4-3}
+    \item Test not BST and not max-heap:\\ 10 5 15 2 12 11 20\label{task4-4}
+    \item Test single node tree:\\ 3\label{task4-5}
+    \item Test empty tree:\\ \emph{null}\label{task4-6}
+  \end{enumerate}
+  \item Test Task 5
+  \begin{enumerate}
+    \item Test with valid input:\\ 10 5 15 2 7 12\label{task5-1}
+    \item Test with invalid input:\\ 10 heh 5 20 99\label{task5-2}
+  \end{enumerate}
+\end{enumerate}
+\subsection{Test Results}
+\input{unittests}\newpage
+\input{task1test1}\newpage
+\input{task1test2}\newpage
+\input{task1test3}\newpage
+\input{task1test4}\newpage
+\input{task1test5}\newpage
+\input{task2test1}\newpage
+\input{task3test1}\newpage
+\input{task3test2}\newpage
+\input{task3test3}\newpage
+\input{task4test1}\newpage
+\input{task4test2}\newpage
+\input{task4test3}\newpage
+\input{task4test4}\newpage
+\input{task4test5}\newpage
+\input{task4test6}\newpage
+\input{task5test1}\newpage
+\input{task5test2}\newpage
+\clearpage
+\section{Lessons Learned}
+During the course of this project, this programmer did not experience any
+significant challenges, beyond careful reading of the project requirements,
+and thinking about how to properly implement tasks 3 (if a tree is a max-heap)
+and task 4 (check if a complete binary tree is a binary search tree).
+
+An error was originally made in task 3 that did not show up until I was trying
+to implement task 4, specifically in identifying a binary tree that is a max-heap,
+but is not a binary search tree.  The cause of the error was that I had not taken
+into consideration that I might have a valid max-heap that contained a proper
+value in the left node, but did not contain any value in the right node.  My
+code was initially calling it not a max-heap, and it had passed my initial
+implementation tests.  However, when I ran the scenario presented in the
+project instructions, specifically, a binary tree consisting of
+\enquote{20 18 15 10}(see \ref{fig:max-heap-not-bst}), I get getting a result that the tree was \emph{not}
+a max-heap, even though it \emph{should} have been.
+
+I addressed this issue by more carefully determining whether a binary tree
+is max heap by considering the case of when a parent only has a single child
+node in the tree.
+
+\begin{figure}[htbp]
+\label{fig:max-heap-not-bst}
+\centering
+\begin{tikzpicture}
+\node {20}
+    child {node {18}
+        child {node {10}}
+    }
+    child {node {15}};
+\end{tikzpicture}
+\caption{A binary tree that is a max-heap but not a binary search tree.}
+\end{figure}
+
+\newpage
+\section{Unit Tests}
+\label{sec:unittests}
+\lstinputlisting[language=Java]{CompleteBinaryTreeTest.java}
+\end{document}
