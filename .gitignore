@@ -40,3 +40,10 @@ build/
 .DS_Store
 .idea
 /project3/lib
+/project3/documentation/project3.aux
+/project3/documentation/project3.fdb_latexmk
+/project3/documentation/project3.fls
+/project3/documentation/project3.log
+/project3/documentation/project3.synctex.gz
+/project3/documentation/project3.toc
+/project3/documentation/svg-inkscape
