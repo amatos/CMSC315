@@ -115,39 +115,38 @@ public class Graph {
   }
 
   public boolean isConnected() {
-    // Check if the graph is connected
+    // Check if the graph is connected, that is, that there is a path between all vertices.
 
-    // By convention, an empty graph is connected.
+    // Check if there are any vertices.  By definition, if there are no vertices, then the (empty) graph is connected.
     if (vertices.isEmpty()) {
       return true;
     }
 
-    // Start from vertex A.
-    String start = vertices.get("A").getName();
-
-    // Define variables to hold the visited vertices and a queue.
+    // Start from any vertex and traverse all reachable vertices.
+    // String start = vertices.keySet().iterator().next();
+    String start = "A";
     Set<String> visited = new HashSet<>();
-    Deque<String> queue = new ArrayDeque<>();
+    Deque<String> stack = new ArrayDeque<>();
+    stack.push(start);
 
-    // Add "a" to the set of visited vertices, and add it to the end of the
-    // queue.
-    visited.add(start);
-    queue.addLast(start);
+    while (!stack.isEmpty()) {
+      // if the stack is NOT empty, set current to the last item placed in the stack
+      String current = stack.pop();
+      if (!visited.add(current)) {
+        // If visited does NOT contain current, add current to the visited list.
+        continue;
+      }
 
-    while (!queue.isEmpty()) {
-      // While the queue is not empty, remove the first item from the queue.
-      String current = queue.removeFirst();
-      // Iterate through the neighbors of the current vertex.
-      for (String n : neighborsOf(current)) {
-        if (visited.add(n)) {
-          // Add the neighbor to the visited list, and add it to the end of
-          // the queue
-          queue.addLast(n);
+      for (String neighbor : neighborsOf(current)) {
+        // Iterate through each neighbor of the current vertex
+        if (!visited.contains(neighbor)) {
+          // If it has not been visited, add it to the stack.
+          stack.push(neighbor);
         }
       }
     }
 
-    // If we reached every vertex from A, the graph is connected.
+    // The graph is connected if, and ONLY if, every vertex can be reached from vertex A.
     return visited.size() == vertices.size();
   }
 
