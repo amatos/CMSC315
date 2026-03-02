@@ -3,7 +3,7 @@
  CMSC 315, Project 4
  Date: 3 March 2026
  Description: A JavaFX program that allows a user to draw vertices with an
-   input device, automatically naming each vertex A..Z, thus limiting the
+   input device, automatically naming each vertex A...Z, thus limiting the
    program to only 26 vertices.  The program allows the user to add edge
    lines in-between vertices by entering vertices in a pair of top-line
    textfields, and using a button to add the edge.  The user can then analyze
@@ -63,8 +63,8 @@ public class App extends Application {
      Bottom of window controls and status field:
      Is Connected?: button
      Has Cycles?: button
-     Depth First Search: button
-     Breadth First Search: button
+     Depth-first Search: button
+     Breadth-first Search: button
      Status field: textfield
     */
     VBox bottomControls = buildBottomControls();
@@ -91,11 +91,11 @@ public class App extends Application {
     Label v1Label = new Label("Vertex 1");
     Label v2Label = new Label("Vertex 2");
 
-    // Create textfield for vertex 1, v1Field, set 4 text columns wide
+    // Create a textfield for vertex 1, v1Field, set 4 text columns wide
     v1Field = new TextField();
     v1Field.setPrefColumnCount(4);
 
-    // Create textfield for vertex 2, v2Field, set 4 text columns wide
+    // Create a textfield for vertex 2, v2Field, set 4 text columns wide
     v2Field = new TextField();
     v2Field.setPrefColumnCount(4);
 
@@ -126,8 +126,8 @@ public class App extends Application {
      centered, 10px padded hbox to contain the buttons:
      Is Connected?: button
      Has Cycles?: button
-     Depth First Search: button
-     Breadth First Search: button
+     Depth-first Search: button
+     Breadth-first Search: button
     */
     HBox buttonRow = new HBox(10);
     buttonRow.setAlignment(Pos.CENTER);
@@ -135,8 +135,8 @@ public class App extends Application {
     /*
      The four required buttons:
      n.b.:
-     Abbreviating Depth First Search to dfs in button name.
-     Abbreviating Breadth First Search to bfs in button name.
+     Abbreviating Depth First Search to dfs in the button name.
+     Abbreviating Breadth First Search to bfs in the button name.
     */
     Button isConnectedButton = new Button("Is Connected?");
     Button hasCyclesButton = new Button("Has Cycles?");
@@ -174,9 +174,10 @@ public class App extends Application {
      return a list of Vertex objects that match, if any.
     */
     dfsButton.setOnAction(e -> {
-      // Perform a depth first search, set "order" to the results.
+      // Perform a depth-first search, set "order" to the results.
       List<Vertex> order = graph.depthFirstSearch();
-      // Populate "text" with the map of vertex names, joined by a comma and space.
+      // Populate "text" with the map of vertex names, joined by a comma
+      // and space.
       String text = order.stream()
         .map(Vertex::getName)
         .collect(Collectors.joining(", "));
@@ -184,9 +185,11 @@ public class App extends Application {
       statusField.setText("DFS: " + text);
     });
 
-    // Action event for bfsButton:
-    // call graph.breadthFirstSearch() to perform a breadth first search and
-    // return a list of Vertex objects that match, if any.
+    /*
+     Action event for bfsButton:
+     call graph.breadthFirstSearch() to perform a breadth first search and
+     return a list of Vertex objects that match, if any.
+    */
     bfsButton.setOnAction(e -> {
       List<Vertex> order = graph.breadthFirstSearch();
       String text = order.stream()
@@ -231,7 +234,7 @@ public class App extends Application {
     }
 
     /*
-     Adding an edge requires valid values for both  v1 and v2.
+     Adding an edge requires valid values for both v1 and v2.
      graph.addEdge() will validate that both vertices exist, returning
      a boolean indicating success or failure.
     */

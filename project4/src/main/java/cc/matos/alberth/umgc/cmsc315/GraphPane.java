@@ -26,9 +26,11 @@ public class GraphPane extends Pane {
   // Class to visually display the pane, with event handlers for clicks
   // to create vertices and a method to draw edges.
 
-  // Variables for the graph as well as vertex name.
-  // n.b., vertex names start with A and proceed through the alphabet,
-  // limiting the number of vertices to 26.
+  /*
+   Variables for the graph as well as vertex name.
+   n.b., vertex names start with A and proceed through the alphabet,
+   limiting the number of vertices to 26.
+  */
   private final Graph graph;
   private char nextVertexName = 'A';
 
@@ -38,15 +40,17 @@ public class GraphPane extends Pane {
   public GraphPane(Graph graph) {
     this.graph = graph;
 
-    // Set graph style to light grey background with a light grey border.
+    // Set graph style to a light grey background with a light grey border.
     setStyle("-fx-background-color: lightgrey; -fx-border-color: lightgrey;");
     // Set a reasonable size for the graph pane, 400x600 pixels
     setPrefSize(600, 400);
 
-    // Event handler for input device action.  On a setOnMouseClicked() event
-    // with the primary button, add a vertex at the clicked location via a
-    // call to addVertexAtLocation(x, y), where x and y are provided via
-    // the MouseEvent.
+    /*
+     Event handler for input device action.  On a setOnMouseClicked() event
+     with the primary button, add a vertex at the clicked location via a
+     call to addVertexAtLocation(x, y), where x and y are provided via
+     the MouseEvent.
+    */
     setOnMouseClicked(e -> {
       if (e.getButton() == MouseButton.PRIMARY) {
         addVertexAtLocation(e.getX(), e.getY());
@@ -55,14 +59,16 @@ public class GraphPane extends Pane {
   }
 
   private void addVertexAtLocation(double x, double y) {
-    // Add a vertex at the indicated location.
+    /*
+     Add a vertex at the indicated location.
+     While the instructions do not address the number of vertices that
+     should be allowed, it _does_, however, state that the first vertex
+     should be labeled A and subsequent vertices should be labeled with the
+     next letters of the alphabet.  This implies that there should be a
+     maximum of 26 vertices, labeled A...Z. If the next available vertex
+     name goes beyond Z, return an exception indicating the error.
+    */
 
-    // While the instructions do not address the mumber of vertices that
-    // should be allowed, it _does_, however, state that first vertex should
-    // be labeled A and subsequent vertices should be labeled with the next
-    // letters of the alphabet.  This implies that there should be a maximum
-    // of 26 vertices, labeled A..Z.  If the next available vertex name goes
-    // beyond Z, return an exception indicating the error.
     if (nextVertexName > 'Z') {
       throw new IllegalStateException("Maximum of 26 vertices reached (A..Z).");
     }
@@ -99,15 +105,19 @@ public class GraphPane extends Pane {
   }
 
   public boolean drawEdge(String name1, String name2) {
-    // Draw an edge from one vertex (name1) to another vertex (name2).
-    // Call the map, vertexPosition.get(), to get the location of each
-    // vertex.
+    /*
+     Draw an edge from one vertex (name1) to another vertex (name2).
+     Call the map, vertexPosition.get(), to get the location of each
+     vertex.
+    */
     Point2D p1 = vertexPositions.get(name1);
     Point2D p2 = vertexPositions.get(name2);
 
-    // If a vertex cannot be found, then this indicates that the vertex
-    // does not yet exist.  Return 'false' to the caller to indicate the
-    // problem.
+    /*
+     If a vertex cannot be found, then this indicates that the vertex
+     does not yet exist.  Return 'false' to the caller to indicate the
+     problem.
+    */
     if (p1 == null || p2 == null) {
       return false;
     }

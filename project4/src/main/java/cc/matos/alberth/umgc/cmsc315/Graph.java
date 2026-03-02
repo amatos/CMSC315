@@ -33,6 +33,8 @@ public class Graph {
       return false;
     }
 
+    // Add the vertex to the vertices list, and add the vertex and its
+    // neighbor(s) to the adjacency list as a linked list.
     vertices.put(v.getName(), v);
     adjacency.put(v.getName(), new LinkedHashSet<>());
     return true;
@@ -59,12 +61,14 @@ public class Graph {
 
 
   public boolean hasCycles() {
-    // Check if the undirected graph has cycles.
-    // A cycle is defined as a path that starts and ends at the same vertex
-    // without repeating any edges.  If a path does not return to the origin
-    // vertex, it is not a cycle.
+    /*
+     Check if the undirected graph has cycles.
+     A cycle is defined as a path that starts and ends at the same vertex
+     without repeating any edges.  If a path does not return to the origin
+     vertex, it is not a cycle.
+     */
 
-    // Set to check if a vertex has been visited
+     // Set to check if a vertex has been visited
     Set<String> visited = new HashSet<>();
 
     // Loop to check every vertex.
@@ -83,13 +87,15 @@ public class Graph {
   }
 
   private boolean hasCycleFrom(String current, String parent, Set<String> visited) {
-    // Check if the graph has a cycle.
-    // Passed-in variables:
-    // - current: the current vertex
-    // - parent: the parent vertex, if any
-    // - visited: set of visited vertices
+    /*
+     Check if the graph has a cycle.
+     Passed-in variables:
+     - current: the current vertex
+     - parent: the parent vertex, if any
+     - visited: set of visited vertices
+    */
 
-    // Add current vertex to visited set
+    // Add current vertex to the visited set
     visited.add(current);
 
     // Iterate through neighborsOf the current vertex
@@ -115,25 +121,42 @@ public class Graph {
   }
 
   public boolean isConnected() {
-    // Check if the graph is connected, that is, that there is a path between all vertices.
+    // Check if the graph is connected, that is, that there is a path between
+    // all vertices.
 
-    // Check if there are any vertices.  By definition, if there are no vertices, then the (empty) graph is connected.
+    // Check if there are any vertices.  By definition, if there are no
+    // vertices, then the (empty) graph is connected.
     if (vertices.isEmpty()) {
       return true;
     }
 
-    // Start from any vertex and traverse all reachable vertices.
-    // String start = vertices.keySet().iterator().next();
-    String start = "A";
+    // Check if there is a vertex "A"
+    if (!vertices.containsKey("A")) {
+      /*
+       If there is no vertex A, but there are other vertices, we have a
+       conflict.  While is it acceptable for graphs to contain vertices
+       other than A, the project requirements state that the vertices MUST
+       start with A. Therefore, this is an invalid graph.
+       n.b.: This is different from the above case because the above case
+         tests for an empty graph.  This case is NOT an empty graph, it is
+         a graph that does not start with vertex A.
+      */
+      return false;
+    }
+
+    // Define variables to hold a set of visited vertices, a stack for DFS
+    // traversal, and push A to the stack.
     Set<String> visited = new HashSet<>();
     Deque<String> stack = new ArrayDeque<>();
-    stack.push(start);
+    stack.push("A");
 
     while (!stack.isEmpty()) {
-      // if the stack is NOT empty, set current to the last item placed in the stack
+      // if the stack is NOT empty, set current to the last item placed in
+      // the stack
       String current = stack.pop();
       if (!visited.add(current)) {
-        // If visited does NOT contain current, add current to the visited list.
+        // If visited does NOT contain current, add current to the
+        // visited list.
         continue;
       }
 
@@ -146,22 +169,25 @@ public class Graph {
       }
     }
 
-    // The graph is connected if, and ONLY if, every vertex can be reached from vertex A.
+    // The graph is connected if, and ONLY if, every vertex can be reached
+    // from vertex A.
     return visited.size() == vertices.size();
   }
 
   public List<Vertex> depthFirstSearch() {
-    // Perform a depth-first search
-    // Definition:  Using stacks. a DFS follows a path forward until it
-    // reaches a leaf node, then backs up the stack, and follows a different
-    // path to explore all nodes.
+    /*
+     Perform a depth-first search
+     Definition:  Using stacks. a DFS follows a path forward until it
+     reaches a leaf node, then backs up the stack, and follows a different
+     path to explore all nodes.
+    */
 
     // If "A" isn't in the graph, there is nothing to traverse.
     if (!vertices.containsKey("A")) {
       return new ArrayList<>();
     }
 
-    // Variables to track order of vertices, whether a vertex has been
+    // Variables to track the order of vertices, whether a vertex has been
     // visited, and the stack of vertices to visit.
     List<Vertex> order = new ArrayList<>();
     Set<String> visited = new HashSet<>();
@@ -204,10 +230,12 @@ public class Graph {
   }
 
   public List<Vertex> breadthFirstSearch() {
-    // Perform a breadth-first search
-    // Definition:  Using queues. a BFS visits all vertices at an increasing
-    // distance from the start.  That is, first it visits all vertices 1
-    // step away from the start, then 2 steps, and so on.
+    /*
+     Perform a breadth-first search
+     Definition:  Using queues. a BFS visits all vertices at an increasing
+     distance from the start.  That is, first it visits all vertices 1
+     step away from the start, then 2 steps, and so on.
+    */
 
     // If "A" isn't in the graph, there is nothing to traverse.
     if (!vertices.containsKey("A")) {
