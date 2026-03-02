@@ -1,0 +1,48 @@
+@startuml
+
+
+skinparam linetype ortho
+
+class App {
+  + App():
+  - onAddEdge(): void
+  - buildBottomControls(): VBox
+  + start(Stage): void
+  - buildTopControls(): HBox
+  + main(String[]): void
+}
+class Graph {
+  + Graph():
+  + addEdge(String, String): boolean
+  + hasCycles(): boolean
+  + depthFirstSearch(): List<Vertex>
+  + neighborsOf(String): Set<String>
+  + addVertex(Vertex): boolean
+  - hasCycleFrom(String, String, Set<String>): boolean
+  + breadthFirstSearch(): List<Vertex>
+   connected: boolean
+}
+class GraphPane {
+  + GraphPane(Graph):
+  - addVertexAtLocation(double, double): void
+  - drawVertex(Vertex): void
+  + drawEdge(String, String): boolean
+}
+class Vertex {
+  + Vertex(double, double, String):
+  - y: double
+  - x: double
+  - name: String
+   name: String
+   y: double
+   x: double
+}
+
+App       "1" *-[#595959,plain]-> "graph\n1" Graph
+App        -[#595959,dashed]->  Graph     : "«create»"
+App        -[#595959,dashed]->  GraphPane : "«create»"
+App       "1" *-[#595959,plain]-> "graphPane\n1" GraphPane
+Graph     "1" *-[#595959,plain]-> "vertices\n*" Vertex
+GraphPane "1" *-[#595959,plain]-> "graph\n1" Graph
+GraphPane  -[#595959,dashed]->  Vertex    : "«create»"
+@enduml
