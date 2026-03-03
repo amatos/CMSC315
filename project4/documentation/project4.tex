@@ -1,0 +1,158 @@
+\documentclass{scrartcl}
+\usepackage[letterpaper,top=1in,bottom=1in]{geometry}
+% \usepackage{tabulary}
+\usepackage[american]{babel}
+% \usepackage{booktabs}
+\usepackage{csquotes}
+\usepackage{fontspec}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{siunitx}
+\usepackage{svg}
+\usepackage{scrlayer-fancyhdr}
+% \usepackage{scrextend}
+\usepackage{tabularray}
+\usepackage{wrapfig}
+\usepackage{tikz}
+\usepackage{amsmath}
+\usepackage{xcolor}
+\usepackage{tikz}
+
+\title{CMSC 315, Project 4}
+\author{Alberth Matos}
+\date{03 Mar 2026}
+\UseTblrLibrary{booktabs}
+\setmainfont{Hoefler Text}
+\setmonofont{Courier Prime}
+\setlength\heavyrulewidth{0.20ex}
+\setlength\cmidrulewidth{0.10ex}
+\setlength\lightrulewidth{0.10ex}
+\newcolumntype{L}{>{\raggedright\arraybackslash}X} % Defines new column type
+% with variable length, similar to X in tabularx, but is left aligned rather
+% than justified
+\newcolumntype{R}{>{\raggedleft\arraybackslash}X} % Defines new column type
+% with variable length, similar to X in tabularx, but is right aligned rather
+% than justified
+\newcolumntype{C}{>{\centering\arraybackslash}X} % Defines new column type
+% with variable length, similar to X in tabularx, but is centered rather
+% than justified
+\hypersetup{
+    pdftitle={CMSC 315, Project 4},
+    pdfauthor={Alberth Matos}
+}
+\lstdefinestyle{numberedLines}{
+    numbers=left,
+    numberstyle=\small,
+    stepnumber=1,
+    numbersep=5pt,
+    frame=none,
+    framerule=0.5pt,
+    framesep=2pt,
+    basicstyle=\ttfamily,
+    keywordstyle=\color{blue}\bfseries,
+    commentstyle=\color{gray},
+    stringstyle=\color{black},
+    showstringspaces=false,
+    breaklines=true,
+    postbreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\hookrightarrow\space}}
+}
+\lstset{style=numberedLines}
+\setcounter{page}{1}
+
+\pagestyle{fancy}
+\fancyhead{}
+\fancyfoot{}
+\fancyhead[R]{A.Matos}
+\fancyhead[L]{CMSC 315, Project 4}
+\fancyfoot[C]{\thepage}
+
+
+
+\begin{document}
+\maketitle
+\tableofcontents
+\thispagestyle{empty}
+\newpage
+\section{Design}
+
+The goal of the project was to understand graph terminology, and how to work with graphs in Java. The main challenge of this project was in tracking individual vertices, as well the edges, if any, connecting them.  This programmer's solution to the problem consisted of building upon the methods and techniques covered in previous weeks, using linked lists, queues, stacks, recursion, and other data structures.  As directed by the project requirements, the application consists of 4 main classes:
+
+\begin{itemize}
+  \item App: the main class that drives the application.
+  \item Graph: the class that represents the graph and its vertices and edges.
+  \item Vertex: the class that represents a vertex in the graph.
+  \item GraphPane: the class that represents the graphical user interface for the graph, extending Pane.
+\end{itemize}
+
+The application makes use of JavaFX for the graphical user interface, is built via Maven, and uses JUnit for unit testing.
+
+\subsection{UML Diagram}
+\includesvg[width=0.995\linewidth]{images/project4-class-uml.svg}
+\newpage
+\section{Testing:}
+\subsection{Test Plan}
+\begin{enumerate}
+  \item Edges require distinct vertices as endpoints.\label{test1}
+  \item Edges can only be created between existing vertices.\label{test2}
+  \item Edges are properly drawn between two vertices.\label{test3}
+  \item Both BFS and DFS searches return correct values for an empty graph.\label{test4}
+  \item BFS and DFS searches return correct values for a graph with one vertex.\label{test5}
+  \item BFS and DFS searches return correct values for a graph with two vertices with no edge lines.\label{test6}
+  \item BFS and DFS searches return correct values for a graph with multiple vertices with edge lines.\label{test7}
+  \item BFS and DFS searches return correct values for a cyclic graph.\label{test8}
+  \item \enquote{Is Connected?} button returns correct values for a cyclic graph.\label{test9}
+  \item \enquote{Is Connected?} button returns correct values for an acyclic graph, but \emph{is} connected.\label{test10}
+  \item \enquote{Is Connected?} button returns correct values for an acyclic graph, which \emph{is not} connected.\label{test11}
+  \item \enquote{Has Cycles} button correctly shows no cycle for an acyclic graph.\label{test12}
+  \item \enquote{Has Cycles} button correctly shows \enquote{The graph has cycles} for a cyclic graph.\label{test13}
+  \item \enquote{Depth First Search} button correctly shows a DFS traversal for a cyclic graph.\label{test14}
+  \item \enquote{Breadth First Search} button correctly shows a BFS traversal for a cyclic graph.\label{test15}
+  \item Unit tests for each method in GraphTest.\label{unittests}
+\end{enumerate}
+\newpage
+\subsection{Test Results}
+\input{test1}\newpage
+\input{test2}\newpage
+\input{test3}\newpage
+\input{test4}\newpage
+\input{test5}\newpage
+\input{test6}\newpage
+\input{test7}\newpage
+\input{test8}\newpage
+\input{test9}\newpage
+\input{test10}\newpage
+\input{test11}\newpage
+\input{test12}\newpage
+\input{test13}\newpage
+\input{test14}\newpage
+\input{test15}\newpage
+\input{unittests}\newpage
+\clearpage
+\section{Lessons Learned}
+During the course of this project, this programmer further developed his skills in Java and JavaFX.  While there weren't any memorable challenges that came up, there were several points in where the programmer had to stop and consider the project requirements.  For example, while graphs that do not contain a vertex A is perfectly valid, the project requirements specifically identified that all graphs must start with Vertex A, and proceed through the remainder of the alphabet.  This also imposed a maximal limit on the number of vertices that could be used in the graph, i.e., no more than 26 vertices.
+
+Regarding the requirement that the graph must begin with vertex A, there is a specific check in the unit tests that explicitly fail a connected graph that only contains a single vertex, B.  Please see line 13 of the following code snippet taken from \emph{GraphTest.java}\textsuperscript{\ref{sec:unittests}}:
+
+\begin{lstlisting}[language=Java]
+@Test
+void isConnectedHandlesEmptyMissingAConnectedAndDisconnectedCases() {
+  Graph empty = new Graph();
+  // The graph should return true, since it is a connected graph.
+  assertTrue(empty.isConnected());
+
+  // Define a graph that does NOT contain A
+  Graph noA = new Graph();
+  // Add a vertex B to the graph.
+  noA.addVertex(new Vertex(1, 1, "B"));
+  // Even though a single vertex graph is, by definition, connected, this
+  // graph should return that it is NOT connected,
+  assertFalse(noA.isConnected());
+}
+\end{lstlisting}
+As noted in the comments (lines 11 and 12), this unit test is explicitly verifying that a graph containing a single vertex, B, is not connected, even though, \emph{by convention}, a single vertex graph is connected.  Yet, the project requirements state that all graphs must start with vertex A, which this graph does not contain.  Therefore, per the project requirements, this graph is considered disconnected.
+\newpage
+\section{Unit Tests}
+\label{sec:unittests}
+\lstinputlisting[language=Java]{GraphTest.java}
+\end{document}
