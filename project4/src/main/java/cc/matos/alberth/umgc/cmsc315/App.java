@@ -254,7 +254,13 @@ public class App extends Application {
       }
     } else {
       // if isValidEdge is false, display an error message indicating such.
-      statusField.setText("One or both vertices do not exist.");
+      if (v1.equals(v2)) {
+        // If vertex v1 and vertex v2 are the same, display an error message.
+        statusField.setText("Edges must be between 2 distinct vertices.");
+      } else {
+        // If vertex v1 or vertex v2 does not exist, display an error message.
+        statusField.setText("One or both vertices do not exist.");
+      }
     }
   }
 
